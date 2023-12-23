@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema({
 
 // timestamps for getting the time of creating and updation of the user
 
-// creating the user model
+// creating the user model with the name User and above created schema
 const User = mongoose.model('User',userSchema);
 
 export default User;
