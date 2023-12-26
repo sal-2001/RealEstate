@@ -21,6 +21,7 @@ export default function Profile() {
   // request.resource.size < 2 * 1024 * 1024 &&
   // request.resource.contentType.matches('image/.*')
   const handleFileUpload = (file) => {
+    
     const storage = getStorage(app);
     //to have a unique name we use time + file name as FileName
     const fileName = new Date().getTime() + file?.name;
