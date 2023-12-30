@@ -50,3 +50,17 @@ export const updateListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getListing = async (req, res, next) => {
+  const listing = await Listing.findById(req.params.id);
+  //if the listing doesn't exist
+  if (!listing) {
+    return next(errorHandler(404, "Listing not found"));
+  }
+  console.log(req);
+  try {
+    res.status(200).json(listing);
+  } catch (error) {
+    next(error);
+  }
+};
