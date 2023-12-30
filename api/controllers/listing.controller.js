@@ -45,7 +45,7 @@ export const updateListing = async (req, res, next) => {
       req.body,
       { new: true }
     );
-    res.status(200).json("Updated listing successfully");
+    res.status(200).json(updatedListing);
   } catch (error) {
     next(error);
   }
@@ -57,7 +57,6 @@ export const getListing = async (req, res, next) => {
   if (!listing) {
     return next(errorHandler(404, "Listing not found"));
   }
-  console.log(req);
   try {
     res.status(200).json(listing);
   } catch (error) {

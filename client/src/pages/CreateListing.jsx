@@ -9,7 +9,7 @@ import { app } from "../firebase";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 export default function CreateListing() {
-  const naviage = useNavigate();
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
   const [formData, setFormData] = useState({
@@ -136,7 +136,7 @@ export default function CreateListing() {
         setError(data.message);
         return;
       }
-      naviage(`/listing/${data._id}`);
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);

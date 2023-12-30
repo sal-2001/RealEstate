@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 
 export default function UpdateListing() {
-  const naviage = useNavigate();
+  const navigate = useNavigate();
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
   const [files, setFiles] = useState([]);
@@ -45,7 +45,7 @@ export default function UpdateListing() {
       setFormData(data);
     };
     fetchListing();
-  }, []);
+  }, [params.listingId]);
   const storeImage = async (file) => {
     return new Promise((resolve, reject) => {
       const storage = getStorage(app);
@@ -131,7 +131,6 @@ export default function UpdateListing() {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("formData: ", formData);
     try {
       if (formData.imageUrls.length < 1)
         return setError("You must upload at least one image");
@@ -152,7 +151,8 @@ export default function UpdateListing() {
         setError(data.message);
         return;
       }
-      naviage(`/listing/${data._id}`);
+      // console.log(data);
+      navigate(`/listing/${data._id}`);
     } catch (error) {
       setError(error.message);
       setLoading(false);
