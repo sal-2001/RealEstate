@@ -26,3 +26,27 @@ export const deleteListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const updateListing = async (req, res, next) => {
+  const listing = await Listing.findById(req.params.id);
+  //if the listing doesn't exist
+  if (!listing) {
+    return next(errorHandler(404, "Listing not found"));
+  }
+  //if the listing doesn't belong to this particular user
+  if (req.user.id !== listing.userRef) {
+    return next(errorHandler(401, "You can only access your own listing"));
+  }
+
+  try {
+    //new: true is required, as if we won't write it, it is going to produce the previouse data, not the updated one
+    const updatedListing = await Listing.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.status(200).json("Updated listing successfully");
+  } catch (error) {
+    next(error);
+  }
+};
