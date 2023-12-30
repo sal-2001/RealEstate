@@ -63,3 +63,58 @@ export const getListing = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getListings = async (req, res, next) => {
+  try {
+    const limit = parseInt(req.query.limit) || 9;
+    const startIndex = parseInt(req.query.startIndex) || 0;
+
+    let offer = req.query.offer;
+    if (offer === undefined || offer === false) {
+      //if offer is false or undefined we need all the data's with and without offer
+      //so we search in the database for both offer true & false
+      offer = { $in: [false, true] };
+    }
+
+    let furnished = req.query.furnished;
+    if (furnished === undefined || furnished === false) {
+      //if furnished is false or undefined we need all the data's
+      furnished = { $in: [false, true] };
+    }
+
+    let parking = req.query.parking;
+    if (parking === undefined || parking === false) {
+      parking = { $in: [false, true] };
+    }
+
+    let type = req.query.type;
+    if (type === undefined || type === "all") {
+      type = { $in: ["rent", "sale"] };
+    }
+
+    //if there is no search term we need all the data, which can be obtained by empty sttring
+    const searchTerm = req.query.searchTerm || "";
+
+    //if there no need of sort then we sort based on the creation time (time stamp)
+    const sort = req.query.sort || "createdAt";
+
+    //if there is no preference order we default order it by descending order
+    const order = req.query.order || "desc";
+
+    //options i means doesn't care about uppercase and lowercase
+    const litings = await Listing.find({
+      name: { $regex: searchTerm, $options: "i" },
+      offer,
+      furnished,
+      parking,
+      type,
+    })
+      .sort({ [sort]: order })
+      .limit(limit)
+      .skip(startIndex);
+
+    return res.status(200).json(litings);
+  } catch (error) {
+    next(error);
+  }
+};
