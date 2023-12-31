@@ -70,20 +70,20 @@ export const getListings = async (req, res, next) => {
     const startIndex = parseInt(req.query.startIndex) || 0;
 
     let offer = req.query.offer;
-    if (offer === undefined || offer === false) {
+    if (offer === undefined || offer === "false") {
       //if offer is false or undefined we need all the data's with and without offer
       //so we search in the database for both offer true & false
       offer = { $in: [false, true] };
     }
 
     let furnished = req.query.furnished;
-    if (furnished === undefined || furnished === false) {
+    if (furnished === undefined || furnished === "false") {
       //if furnished is false or undefined we need all the data's
       furnished = { $in: [false, true] };
     }
 
     let parking = req.query.parking;
-    if (parking === undefined || parking === false) {
+    if (parking === undefined || parking === "false") {
       parking = { $in: [false, true] };
     }
 
@@ -102,7 +102,7 @@ export const getListings = async (req, res, next) => {
     const order = req.query.order || "desc";
 
     //options i means doesn't care about uppercase and lowercase
-    const litings = await Listing.find({
+    const listings = await Listing.find({
       name: { $regex: searchTerm, $options: "i" },
       offer,
       furnished,
@@ -112,8 +112,8 @@ export const getListings = async (req, res, next) => {
       .sort({ [sort]: order })
       .limit(limit)
       .skip(startIndex);
-
-    return res.status(200).json(litings);
+    res.status(200).json(listings);
+    // console.log(listings);
   } catch (error) {
     next(error);
   }
