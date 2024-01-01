@@ -269,7 +269,7 @@ export default function CreateListing() {
                 value={formData.regularPrice}
               />
               <div className="flex flex-col items-center">
-                <p>Regualr Price</p>
+                <p>Regular Price</p>
                 {formData.type === "rent" && (
                   <span className="text-xs">($ / month)</span>
                 )}
