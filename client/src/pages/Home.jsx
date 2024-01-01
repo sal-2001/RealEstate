@@ -72,7 +72,7 @@ export default function Home() {
           offerListings.map((listing) => (
             <SwiperSlide>
               <img
-                className="h-[500px] w-full"
+                className="h-[250px] sm:h-[500px] w-full"
                 src={listing.imageUrls[0]}
                 key={listing._id}
                 style={{
