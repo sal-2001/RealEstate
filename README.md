@@ -1,4 +1,4 @@
-## RealEstate
+## RealEstatery
 
 ### 1- MERN Stack Web Application:
 Developed a feature-rich real estate platform using the MERN stack, showcasing full-stack proficiency and seamless Google sign-up integration.
